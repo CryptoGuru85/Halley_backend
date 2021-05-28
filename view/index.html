@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Basic</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #mount {
+            width: 800px;
+            height: 450px;
+        }
+
+        input {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="mount"></div>
+    <div>
+        hlookat: <input type="number" value="0.0" name="hlookat" min="-180" max="180"/><br />
+        vlookat: <input type="number" value="0.0" name="vlookat" min="-90" max="90"/><br />
+        fov: <input type="number" value="0.0" name="fov" /><br />
+        <button name="getview">get current view</button><button name="setview">set current view</button>
+    </div>
+    <script src="../krpano-lib/krpano.js"></script>
+    <script>
+        var swfPath = '../krpano-lib/krpano.swf';
+        var xmlPath = './krpano.xml';
+
+        var hlookat = document.querySelector('input[name="hlookat"]');
+        var vlookat = document.querySelector('input[name="vlookat"]');
+        var fov = document.querySelector('input[name="fov"]');
+        var buttonGet = document.querySelector('button[name="getview"]');
+        var buttonSet = document.querySelector('button[name="setview"]');
+
+        embedpano({
+            swf: swfPath,
+            xml: xmlPath,
+            target: "mount",
+            html5: "prefer",
+            onready(krpano) {
+                function getView() {
+                    hlookat.value = krpano.get('view.hlookat');
+                    vlookat.value = krpano.get('view.vlookat');
+                    fov.value = krpano.get('view.fov');
+                }
+                function setView() {
+                    krpano.set('view.hlookat', hlookat.value);
+                    krpano.set('view.vlookat', vlookat.value);
+                    krpano.set('view.fov', fov.value);
+                }
+
+                buttonGet.onclick = getView;
+                buttonSet.onclick = setView;
+
+                getView();
+            }
+        });
+    </script>
+</body>
+</html>

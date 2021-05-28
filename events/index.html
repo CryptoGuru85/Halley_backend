@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Basic</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #mount {
+            width: 600px;
+            height: 450px;
+        }
+
+        input {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="mount"></div>
+    <div>
+        hlookat: <span class="j-hlookat"></span><br />
+        vlookat: <span class="j-vlookat"></span><br />
+        fov: <span class="j-fov"></span><br />
+    </div>
+    <script src="../krpano-lib/krpano.js"></script>
+    <script>
+        var swfPath = '../krpano-lib/krpano.swf';
+        var xmlPath = './krpano.xml';
+
+        var hlookat = document.querySelector('.j-hlookat');
+        var vlookat = document.querySelector('.j-vlookat');
+        var fov = document.querySelector('.j-fov');
+
+        // global function for krpano
+        function viewChange(h, v, f) {
+            hlookat.innerText = h;
+            vlookat.innerText = v;
+            fov.innerText = f;
+        }
+
+        embedpano({
+            swf: swfPath,
+            xml: xmlPath,
+            target: "mount",
+            html5: "prefer",
+            onready(krpano) {
+                hlookat.innerText = krpano.get('view.hlookat');
+                vlookat.innerText = krpano.get('view.vlookat');
+                fov.innerText = krpano.get('view.fov');
+            }
+        });
+    </script>
+</body>
+</html>
